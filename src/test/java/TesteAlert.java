@@ -21,5 +21,29 @@ public class TesteAlert {
         alerta.accept();
 
         driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
+        driver.quit();
+    }
+
+    @Test
+    public void deveinteragirComAlertComConfirmacao() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1500, 800));
+        driver.get("file:///c:/QA/treinamento/componentes.html");
+
+        driver.findElement(By.id("confirm")).click();
+        Alert confirma = driver.switchTo().alert();
+        Assert.assertEquals("Confirm Simples", confirma.getText());
+        confirma.accept();
+        Assert.assertEquals("Confirmado", confirma.getText());
+        confirma.accept();
+
+        driver.findElement(By.id("confirm")).click();
+        confirma = driver.switchTo().alert();
+        Assert.assertEquals("Confirm Simples", confirma.getText());
+        confirma.dismiss();
+        Assert.assertEquals("Negado", confirma.getText());
+        confirma.dismiss();
+
+        driver.quit();
     }
 }
