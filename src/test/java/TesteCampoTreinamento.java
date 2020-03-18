@@ -31,6 +31,7 @@ public class TesteCampoTreinamento {
         driver.get("C:\\QA\\treinamento\\componentes.html");
 
         driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("Aprendendo Automação\ncom Java!\n");
+        driver.quit();
     }
     @Test
     public void deveInteragirComRadioButton(){
@@ -53,7 +54,7 @@ public class TesteCampoTreinamento {
         driver.findElement(By.id("elementosForm:comidaFavorita:1")).click();
 
         Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:1")).isSelected());
-
+        driver.quit();
     }
 
     @Test
@@ -68,8 +69,8 @@ public class TesteCampoTreinamento {
         //combo.selectByValue("especializacao");
         combo.selectByVisibleText("2o grau completo");
 
-
         Assert.assertEquals("2o grau completo", combo.getFirstSelectedOption().getText());
+        driver.quit();
     }
 
     @Test
@@ -90,8 +91,24 @@ public class TesteCampoTreinamento {
                 break;
             }
         }
-
-
         Assert.assertTrue(encontrou);
+        driver.quit();
+    }
+
+    @Test
+    public void deveVerificarValoresComboMultiplo() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1500, 800));
+        driver.get("file:///c:/QA/treinamento/componentes.html");
+
+        WebElement elemento = driver.findElement(By.id("elementosForm:esportes"));
+        Select combo = new Select(elemento);
+        combo.selectByVisibleText("Corrida");
+        combo.selectByVisibleText("Natacao");
+        combo.selectByVisibleText("O que eh esporte?");
+
+        List<WebElement> todasAsOpcoes = combo.getAllSelectedOptions();
+        Assert.assertEquals(3, todasAsOpcoes.size());
+        driver.quit();
     }
 }
