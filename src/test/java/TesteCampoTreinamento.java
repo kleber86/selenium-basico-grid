@@ -114,7 +114,7 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveClicarNoBotao() {
+    public void deveInteragirComBotao() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1500, 800));
         driver.get("file:///c:/QA/treinamento/componentes.html");
@@ -122,6 +122,19 @@ public class TesteCampoTreinamento {
         botao.click();
 
         Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
+        driver.quit();
+    }
+
+    @Test
+    public void deveInteragirComLinks() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1500, 800));
+        driver.get("file:///c:/QA/treinamento/componentes.html");
+
+        driver.findElement(By.linkText("Voltar")).click();
+        WebElement voltou = driver.findElement(By.id("resultado"));
+
+        Assert.assertEquals("Voltou!", voltou.getText());
         driver.quit();
     }
 }
