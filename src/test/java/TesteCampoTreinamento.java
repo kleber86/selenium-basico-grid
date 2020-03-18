@@ -33,6 +33,7 @@ public class TesteCampoTreinamento {
         driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("Aprendendo Automação\ncom Java!\n");
         driver.quit();
     }
+
     @Test
     public void deveInteragirComRadioButton(){
         WebDriver driver = new ChromeDriver();
@@ -109,6 +110,18 @@ public class TesteCampoTreinamento {
 
         List<WebElement> todasAsOpcoes = combo.getAllSelectedOptions();
         Assert.assertEquals(3, todasAsOpcoes.size());
+        driver.quit();
+    }
+
+    @Test
+    public void deveClicarNoBotao() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1500, 800));
+        driver.get("file:///c:/QA/treinamento/componentes.html");
+        WebElement botao = driver.findElement(By.id("buttonSimple"));
+        botao.click();
+
+        Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
         driver.quit();
     }
 }
