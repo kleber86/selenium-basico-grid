@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class TesteCampoTreinamento {
 
     @Test
@@ -68,5 +70,28 @@ public class TesteCampoTreinamento {
 
 
         Assert.assertEquals("2o grau completo", combo.getFirstSelectedOption().getText());
+    }
+
+    @Test
+    public void deveVerificarValoresCombo(){
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1500,800));
+        driver.get("file:///c:/QA/treinamento/componentes.html");
+
+        WebElement elemento = driver.findElement(By.id("elementosForm:escolaridade"));
+        Select combo = new Select(elemento);
+        List<WebElement> options = combo.getOptions();
+        Assert.assertEquals(8, options.size());
+
+        boolean encontrou = false;
+        for(WebElement option: options){
+            if(option.getText().equals("Mestrado")) {
+                encontrou = true;
+                break;
+            }
+        }
+
+
+        Assert.assertTrue(encontrou);
     }
 }
