@@ -13,7 +13,7 @@ import java.util.List;
 public class TesteCampoTreinamento {
 
     @Test
-    public void test(){
+    public void test() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1280, 800));
         driver.get("C:\\QA\\treinamento\\componentes.html");
@@ -25,7 +25,7 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveInteragirComTextArea(){
+    public void deveInteragirComTextArea() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1280, 800));
         driver.get("C:\\QA\\treinamento\\componentes.html");
@@ -35,7 +35,7 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveInteragirComRadioButton(){
+    public void deveInteragirComRadioButton() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1280, 800));
         driver.get("C:\\QA\\treinamento\\componentes.html");
@@ -46,7 +46,7 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveInteragirComCheckbox(){
+    public void deveInteragirComCheckbox() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("C:\\QA\\treinamento\\componentes.html");
@@ -59,9 +59,9 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveInteragirComCombo(){
+    public void deveInteragirComCombo() {
         WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1500,800));
+        driver.manage().window().setSize(new Dimension(1500, 800));
         driver.get("file:///c:/QA/treinamento/componentes.html");
 
         WebElement elemento = driver.findElement(By.id("elementosForm:escolaridade"));
@@ -75,9 +75,9 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveVerificarValoresCombo(){
+    public void deveVerificarValoresCombo() {
         WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1500,800));
+        driver.manage().window().setSize(new Dimension(1500, 800));
         driver.get("file:///c:/QA/treinamento/componentes.html");
 
         WebElement elemento = driver.findElement(By.id("elementosForm:escolaridade"));
@@ -86,8 +86,8 @@ public class TesteCampoTreinamento {
         Assert.assertEquals(8, options.size());
 
         boolean encontrou = false;
-        for(WebElement option: options){
-            if(option.getText().equals("Mestrado")) {
+        for (WebElement option : options) {
+            if (option.getText().equals("Mestrado")) {
                 encontrou = true;
                 break;
             }
@@ -137,4 +137,16 @@ public class TesteCampoTreinamento {
         Assert.assertEquals("Voltou!", voltou.getText());
         driver.quit();
     }
+
+    @Test
+    public void deveBuscarTextoNaPagina() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1500, 800));
+        driver.get("file:///c:/QA/treinamento/componentes.html");
+
+        //Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
+        Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
+        driver.quit();
+    }
+
 }
