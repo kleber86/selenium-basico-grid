@@ -27,4 +27,27 @@ public class TesteCampoTreinamento {
 
         driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("Aprendendo Automação\ncom Java!\n");
     }
+    @Test
+    public void deveInteragirComRadioButton(){
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1280, 800));
+        driver.get("C:\\QA\\treinamento\\componentes.html");
+
+        driver.findElement(By.id("elementosForm:sexo:0")).click();
+        Assert.assertTrue(driver.findElement(By.id("elementosForm:sexo:0")).isSelected());
+        driver.quit();
+    }
+
+    @Test
+    public void deveInteragirComCheckBox(){
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("C:\\QA\\treinamento\\componentes.html");
+
+        driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+        driver.findElement(By.id("elementosForm:comidaFavorita:1")).click();
+
+        Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:1")).isSelected());
+
+    }
 }
