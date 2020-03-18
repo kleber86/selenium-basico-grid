@@ -46,4 +46,21 @@ public class TesteAlert {
 
         driver.quit();
     }
+    @Test
+    public void deveinteragirComAlertPrompt() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1500, 800));
+        driver.get("file:///c:/QA/treinamento/componentes.html");
+
+        driver.findElement(By.id("prompt")).click();
+        Alert alerta = driver.switchTo().alert();
+        Assert.assertEquals("Digite um numero", alerta.getText());
+        alerta.sendKeys("12");
+        alerta.accept();
+        Assert.assertEquals("Era 12?", alerta.getText());
+        alerta.accept();
+        Assert.assertEquals(":D", alerta.getText());
+
+        driver.quit();
+    }
 }
