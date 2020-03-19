@@ -12,7 +12,7 @@ public class TesteAlert {
     public void deveinteragirComAlertSimples() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1500, 800));
-        driver.get("file:///c:/QA/treinamento/componentes.html");
+        driver.get("file:///home/kleber/Documents/treinamento/componentes.html");
 
         driver.findElement(By.id("alert")).click();
         Alert alerta = driver.switchTo().alert();
@@ -28,7 +28,7 @@ public class TesteAlert {
     public void deveinteragirComAlertComConfirmacao() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1500, 800));
-        driver.get("file:///c:/QA/treinamento/componentes.html");
+        driver.get("file:///home/kleber/Documents/treinamento/componentes.html");
 
         driver.findElement(By.id("confirm")).click();
         Alert confirma = driver.switchTo().alert();
@@ -50,7 +50,7 @@ public class TesteAlert {
     public void deveinteragirComAlertPrompt() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1500, 800));
-        driver.get("file:///c:/QA/treinamento/componentes.html");
+        driver.get("file:///home/kleber/Documents/treinamento/componentes.html");
 
         driver.findElement(By.id("prompt")).click();
         Alert alerta = driver.switchTo().alert();

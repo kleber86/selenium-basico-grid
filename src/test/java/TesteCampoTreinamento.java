@@ -28,7 +28,7 @@ public class TesteCampoTreinamento {
     public void deveInteragirComTextArea() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1280, 800));
-        driver.get("C:\\QA\\treinamento\\componentes.html");
+        driver.get("/media/kleber/06CE04F9CE04E333/QA/treinamento/componentes.html");
 
         driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("Aprendendo Automação\ncom Java!\n");
         driver.quit();
