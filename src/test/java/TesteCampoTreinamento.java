@@ -14,12 +14,14 @@ import java.util.List;
 
 public class TesteCampoTreinamento {
     private WebDriver driver;
+    private DSL dsl;
 
     @Before
     public void inicializa() {
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1280, 800));
         driver.get("file:///home/kleber/Documents/treinamento/componentes.html");
+        dsl = new DSL(driver);
     }
 
     @After
@@ -28,39 +30,35 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void test() {
-        driver.findElement(By.id("elementosForm:nome")).sendKeys("Kleber");
+    public void testTextField() {
+        dsl.escreve("elementosForm:nome", "Kleber");
         Assert.assertEquals("Kleber", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
     }
 
     @Test
     public void deveInteragirComTextArea() {
-        driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("Aprendendo Automação\ncom Java!\n");
+        dsl.escreve("elementosForm:sugestoes", "Aprendendo Automação\ncom Java!\n");
+        Assert.assertEquals("Aprendendo Automação\ncom Java!\n", dsl.obterValorCampo("elementosForm:sugestoes"));
     }
 
     @Test
     public void deveInteragirComRadioButton() {
-        driver.findElement(By.id("elementosForm:sexo:0")).click();
+        dsl.clicarRadio("elementosForm:sexo:0");
         Assert.assertTrue(driver.findElement(By.id("elementosForm:sexo:0")).isSelected());
     }
 
     @Test
     public void deveInteragirComCheckbox() {
-        driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-        driver.findElement(By.id("elementosForm:comidaFavorita:1")).click();
+        dsl.clicarRadio("elementosForm:comidaFavorita:2");
+        dsl.isRadioMarcado("elementosForm:comidaFavorita:2");
 
-        Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:1")).isSelected());
+        Assert.assertTrue(dsl.isRadioMarcado("elementosForm:comidaFavorita:2"));
     }
 
     @Test
     public void deveInteragirComCombo() {
-        WebElement elemento = driver.findElement(By.id("elementosForm:escolaridade"));
-        Select combo = new Select(elemento);
-        //combo.selectByIndex(3);
-        //combo.selectByValue("especializacao");
-        combo.selectByVisibleText("2o grau completo");
-
-        Assert.assertEquals("2o grau completo", combo.getFirstSelectedOption().getText());
+        dsl.selecionarCombo("elementosForm:escolaridade", "2o grau completo");
+        Assert.assertEquals("2o grau completo",dsl.obterValorCombo("elementosForm:escolaridade"));
     }
 
     @Test
@@ -83,11 +81,12 @@ public class TesteCampoTreinamento {
     @Test
     public void deveVerificarValoresComboMultiplo() {
 
+        dsl.selecionarCombo("elementosForm:esportes", "Natacao");
+        dsl.selecionarCombo("elementosForm:esportes", "Corrida");
+        dsl.selecionarCombo("elementosForm:esportes", "O que eh esporte?");
+
         WebElement elemento = driver.findElement(By.id("elementosForm:esportes"));
         Select combo = new Select(elemento);
-        combo.selectByVisibleText("Corrida");
-        combo.selectByVisibleText("Natacao");
-        combo.selectByVisibleText("O que eh esporte?");
 
         List<WebElement> todasAsOpcoes = combo.getAllSelectedOptions();
         Assert.assertEquals(3, todasAsOpcoes.size());
@@ -95,24 +94,23 @@ public class TesteCampoTreinamento {
 
     @Test
     public void deveInteragirComBotao() {
-        WebElement botao = driver.findElement(By.id("buttonSimple"));
-        botao.click();
+        dsl.clicarBotao("buttonSimple");
 
+        WebElement botao = driver.findElement(By.id("buttonSimple"));
         Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
     }
 
     @Test
     public void deveInteragirComLinks() {
-        driver.findElement(By.linkText("Voltar")).click();
-        WebElement voltou = driver.findElement(By.id("resultado"));
-
-        Assert.assertEquals("Voltou!", voltou.getText());
+        dsl.clicarNoLink("Voltar");
+        Assert.assertEquals("Voltou!", dsl.obterTexto("resultado"));
     }
 
     @Test
     public void deveBuscarTextoNaPagina() {
-        //Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
-        Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
+        Assert.assertEquals("Campo de Treinamento", dsl.obterTexto(By.tagName("h3")));
+        Assert.assertEquals("Cuidado onde clica, muitas armadilhas...",
+                dsl.obterTexto(By.className("facilAchar")));
     }
 
 }
