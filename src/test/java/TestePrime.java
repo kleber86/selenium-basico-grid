@@ -25,7 +25,7 @@ public class TestePrime {
         page = new CampoTreinamentoPage(driver);
     }
 
-    //@After
+    @After
     public void finaliza(){
         driver.quit();
     }
