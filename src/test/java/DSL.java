@@ -14,12 +14,12 @@ public class DSL {
 
     /********* TextField e TextArea ************/
 
-    public void escrever(By by, String texto){
+    public void escrever(By by, String texto) {
         driver.findElement(by).clear();
         driver.findElement(by).sendKeys(texto);
     }
 
-    public void escrever(String id_campo, String texto){
+    public void escrever(String id_campo, String texto) {
         escrever(By.id(id_campo), texto);
     }
 
@@ -33,7 +33,7 @@ public class DSL {
         driver.findElement(By.id(id)).click();
     }
 
-    public boolean isRadioMarcado(String id){
+    public boolean isRadioMarcado(String id) {
         return driver.findElement(By.id(id)).isSelected();
     }
 
@@ -41,7 +41,7 @@ public class DSL {
         driver.findElement(By.id(id)).click();
     }
 
-    public boolean isCheckMarcado(String id){
+    public boolean isCheckMarcado(String id) {
         return driver.findElement(By.id(id)).isSelected();
     }
 
@@ -70,25 +70,25 @@ public class DSL {
         Select combo = new Select(element);
         List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
         List<String> valores = new ArrayList<String>();
-        for(WebElement opcao: allSelectedOptions) {
+        for (WebElement opcao : allSelectedOptions) {
             valores.add(opcao.getText());
         }
         return valores;
     }
 
-    public int obterQuantidadeOpcoesCombo(String id){
+    public int obterQuantidadeOpcoesCombo(String id) {
         WebElement element = driver.findElement(By.id(id));
         Select combo = new Select(element);
         List<WebElement> options = combo.getOptions();
         return options.size();
     }
 
-    public boolean verificarOpcaoCombo(String id, String opcao){
+    public boolean verificarOpcaoCombo(String id, String opcao) {
         WebElement element = driver.findElement(By.id(id));
         Select combo = new Select(element);
         List<WebElement> options = combo.getOptions();
-        for(WebElement option: options) {
-            if(option.getText().equals(opcao)){
+        for (WebElement option : options) {
+            if (option.getText().equals(opcao)) {
                 return true;
             }
         }
@@ -123,12 +123,12 @@ public class DSL {
 
     /********* Alerts ************/
 
-    public String alertaObterTexto(){
+    public String alertaObterTexto() {
         Alert alert = driver.switchTo().alert();
         return alert.getText();
     }
 
-    public String alertaObterTextoEAceita(){
+    public String alertaObterTextoEAceita() {
         Alert alert = driver.switchTo().alert();
         String valor = alert.getText();
         alert.accept();
@@ -136,7 +136,7 @@ public class DSL {
 
     }
 
-    public String alertaObterTextoENega(){
+    public String alertaObterTextoENega() {
         Alert alert = driver.switchTo().alert();
         String valor = alert.getText();
         alert.dismiss();
@@ -156,18 +156,58 @@ public class DSL {
         driver.switchTo().frame(id);
     }
 
-    public void sairFrame(){
+    public void sairFrame() {
         driver.switchTo().defaultContent();
     }
 
     public void trocarJanela(String id) {
         driver.switchTo().window(id);
     }
-    /****** JS   **********/
-    public Object executarJS(String cmd, Object... param){
+
+    /********** JS   **********/
+    public Object executarJS(String cmd, Object... param) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return js.executeScript(cmd, param);
 
     }
-}
 
+    /********** Tabela **********/
+    public void clicarBotaoTabela(String colunaBusca, String valor, String colunaBotao, String idTabela){
+
+        WebElement tabela = driver.findElement(By.xpath("//*[@id='elementosForm:tableUsuarios']"));
+        int idColuna = obterIndiceColuna(colunaBusca, tabela);
+
+        int idLinha = obterIndiceLinha(valor, tabela, idColuna);
+
+        int idColunaBotao = obterIndiceColuna(colunaBotao, tabela);
+
+        WebElement celula = tabela.findElement(By.xpath(".//tr["+idLinha+"]/td["+idColunaBotao+"]"));
+        celula.findElement(By.xpath(".//input")).click();
+    }
+
+    protected int obterIndiceLinha(String valor, WebElement tabela, int idColuna) {
+        List<WebElement> linhas = tabela.findElements(By.xpath("./tbody/tr/td["+idColuna+"]"));
+        int idLinha = -1;
+        for(int i = 0; i < linhas.size(); i++) {
+            if(linhas.get(i).getText().equals(valor)) {
+                idLinha = i+1;
+                break;
+            }
+        }
+        return idLinha;
+    }
+
+
+
+    protected int obterIndiceColuna(String coluna, WebElement tabela) {
+        List<WebElement> colunas = tabela.findElements(By.xpath(".//th"));
+        int idColuna = -1;
+        for(int i = 0; i < colunas.size(); i++) {
+            if(colunas.get(i).getText().equals(coluna)) {
+                idColuna = i+1;
+                break;
+            }
+        }
+        return idColuna;
+    }
+}

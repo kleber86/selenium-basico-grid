@@ -24,7 +24,7 @@ public class TesteCampoTreinamento {
 
     @After
     public void finaliza(){
-     //   driver.quit();
+        //driver.quit();
     }
 
     @Test
@@ -121,6 +121,11 @@ public class TesteCampoTreinamento {
     @Test
     public void testJavascriptDSL(){
         dsl.executarJS("alert('Testando js via selenium')");
+    }
+
+    @Test
+    public void  deveClicarBotaoTabela(){
+        dsl.clicarBotaoTabela("Nome", "Maria", "Botao", "elementosForm:tableUsuarios");
     }
 }
 
