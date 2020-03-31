@@ -27,9 +27,16 @@ public class TesteSincronismo {
     }
 
     @Test
-    public void deveInteragirComRespostaDemorada() throws InterruptedException{
+    public void deveUtilizarEsperaFixa() throws InterruptedException{
         dsl.clicarBotao("buttonDelay");
         Thread.sleep(5000);
+        dsl.escrever("novoCampo", "Deu certo?");
+    }
+
+    @Test
+    public void deveUtilizarEsperaImplicita() throws InterruptedException{
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        dsl.clicarBotao("buttonDelay");
         dsl.escrever("novoCampo", "Deu certo?");
     }
 }
