@@ -35,7 +35,7 @@ public class TesteRegraCadastro {
     public void inicializa(){
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1280, 800));
-        driver.get("file:///home/kleber/Documents/treinamento/componentes.html");
+        driver.get("file:///home/kleber/treinamento/componentes.html");
         dsl = new DSL(driver);
         page = new CampoTreinamentoPage(driver);
     }
